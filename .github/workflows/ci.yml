@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: 17
-          distribution: 'openjdk'
+          distribution: 'adopt'
 
       - name: Build application
         run: ./mvnw clean install
@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: 17
-          distribution: 'openjdk'
+          distribution: 'adopt'
 
       - name: Install Node.js
         uses: actions/setup-node@v2
