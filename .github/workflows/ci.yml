@@ -24,6 +24,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: 17
+          distribution: 'openjdk'
 
       - name: Build application
         run: ./mvnw clean install
@@ -38,11 +39,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: 11
+          java-version: 17
+            distribution: 'openjdk'
 
       - name: Install Node.js
         uses: actions/setup-node@v2
@@ -52,10 +56,10 @@ jobs:
       - name: Install SonarScanner
         run: npm install -g sonarqube-scanner
 
-      - name: SonarQube analysis
-        run: sonar-scanner
+      - name: Run SonarQube analysis
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Set this in repository secrets
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./mvnw clean verify sonar:sonar -Dsonar.login=$SONAR_TOKEN
 
 #  security:
 #    name: Security Scanning
@@ -80,27 +84,27 @@ jobs:
 #        run: ./dependency-check/bin/dependency-check.sh --scan ${{ github.workspace }}/target --format XML -f dependency-check-report.xml
 #        working-directory: ${{ github.workspace }}
 
-  artifact:
-    name: Build Artifact
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: 11
-
-      - name: Build application
-        run: ./mvnw clean install -DskipTests=true
-
-      - name: Archive artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: springboot-app-artifact
-          path: target/*.jar
+#  artifact:
+#    name: Build Artifact
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v2
+#
+#      - name: Set up Java
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: 11
+#
+#      - name: Build application
+#        run: ./mvnw clean install -DskipTests=true
+#
+#      - name: Archive artifact
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: springboot-app-artifact
+#          path: target/*.jar
 
 #  deploy:
 #    name: Deploy to Staging
