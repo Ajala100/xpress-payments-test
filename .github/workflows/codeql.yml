@@ -1,0 +1,26 @@
+name: Code Scanning
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  code-scanning:
+    name: Code Scanning
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+
+      - name: CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
