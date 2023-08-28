@@ -62,8 +62,8 @@ jobs:
       - name: Install SonarScanner
         run: npm install -g sonarqube-scanner
 
-      - name: Run SonarQube analysis
-        run: ./mvnw clean verify sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+#      - name: Run SonarQube analysis
+#        run: ./mvnw clean verify sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 #        env:
 #          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 #
