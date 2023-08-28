@@ -45,6 +45,7 @@ public class ApplicationSecurityConfiguration {
         http.exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedExceptionHandler));
         http.cors(httpSecurityCorsConfigurer -> corsConfiguration());
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
+            authorizationManagerRequestMatcherRegistry.requestMatchers("/test").permitAll();
             authorizationManagerRequestMatcherRegistry.requestMatchers("/api/v1/users/register").permitAll();
             authorizationManagerRequestMatcherRegistry.requestMatchers("/api/v1/airtime/top-up").authenticated();
         });
