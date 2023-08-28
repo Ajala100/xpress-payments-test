@@ -26,6 +26,9 @@ jobs:
           java-version: 17
           distribution: 'adopt'
 
+      - name: Set execute permission for mvnw
+        run: chmod +x mvnw
+
       - name: Build application
         run: ./mvnw clean install
 
